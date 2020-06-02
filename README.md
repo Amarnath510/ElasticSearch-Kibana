@@ -1,7 +1,8 @@
 # Elastic Search and Kibana
 
 ## ES concepts
-- https://logz.io/blog/10-elasticsearch-concepts/
+- (ES Concepts)[https://logz.io/blog/10-elasticsearch-concepts/]
+- (Elasticsearch 101)[https://medium.com/velotio-perspectives/elasticsearch-101-fundamentals-core-components-a1fdc6090a5e]
 
 ## Installation
   - Download ES from (here)[https://www.elastic.co/downloads/elasticsearch]
@@ -25,9 +26,17 @@
   - Download Kibana from (here)[https://www.elastic.co/downloads/kibana]
   - Unzip it and follow instruction in above link to run it
 
+## Shards
+Shards help with enabling Elasticsearch to become horizontally scalable. An index can store millions of documents and occupy terabytes of data. This can cause problems with performance, scalability, and maintenance. Let’s see how Shards help achieve scalability.
+Indices are divided into multiple units called Shards (Refer below diagram). Shard is a full-featured subset of an index. Shards of the same index now can reside on the same or different nodes of the cluster. Shard decides the degree of parallelism for search and indexing operations. Shards allow the cluster to grow horizontally. [source](https://medium.com/velotio-perspectives/elasticsearch-101-fundamentals-core-components-a1fdc6090a5e)
+
+## Replicas
+Hardware can fail at any time. To ensure fault tolerance and high availability ES provides a feature to replicate the data. Shards can be replicated. A shard which is being copied is called as Primary Shard. The copy of the primary shard is called a replica shard or simply a replica. Similar to the number of shards, a number of replication can also be specified at the time of index creation. Replication served two purposes
+- High Availability — Replica is never been created on the same node where the primary shard is present. This ensures that even if a complete node is failed data is can be available through the replica shard.
+- Performance — Replica can also contribute to search capabilities. The search queries will be executed parallelly across the replicas. [source](https://medium.com/velotio-perspectives/elasticsearch-101-fundamentals-core-components-a1fdc6090a5e)
 
 ## Upload dataset to ES
-  - Download "shakespeare.json" from (here)[https://www.elastic.co/guide/en/kibana/5.5/tutorial-load-dataset.html]
+  - Download "shakespeare.json" from [here](https://www.elastic.co/guide/en/kibana/5.5/tutorial-load-dataset.html)
   - Upload the json to ES via POST call, `curl -XPOST "localhost:9200/shakespeare/_bulk?pretty" --data-binary @shakespeare.json`
   - Open Kibana at http://localhost:5601/ abd go to Dev Tools on the left navigation
   - Run, `GET _cat/indices`. You should see shakespeare and the size of the index,
@@ -40,8 +49,45 @@
 
 ## Queries
 
-  ### Display all index fields (and other details)
-  - `GET shakespeare`
+  ### Details about fields(properties), mappings, number of shards & replicas
+  - `GET shakespeare` (Just extracted required fileds for demonstration)
+  ```
+   {
+    "shakespeare": {
+      "aliases": {},
+      "mappings": {
+        "act": {
+          "properties": {
+            "line_id": {
+              "type": "long"
+            },
+            "speaker": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        }
+      },
+      "settings": {
+        "index": {
+          "creation_date": "1590931118645",
+          "number_of_shards": "5",
+          "number_of_replicas": "1",
+          "uuid": "hdRg6oo1TiqvIN5-JxcLiQ",
+          "version": {
+            "created": "5030099"
+          },
+          "provided_name": "shakespeare"
+        }
+      }
+     }
+   }
+  ```
 
   ### Find number of documents in the index
   - `GET shakespeare/_search` (shorthand querying style) or 
