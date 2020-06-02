@@ -1,11 +1,11 @@
 # Elastic Search and Kibana
 
 ## ES concepts
-- (ES Concepts)[https://logz.io/blog/10-elasticsearch-concepts/]
-- (Elasticsearch 101)[https://medium.com/velotio-perspectives/elasticsearch-101-fundamentals-core-components-a1fdc6090a5e]
+- [ES Concepts](https://logz.io/blog/10-elasticsearch-concepts/)
+- [Elasticsearch 101](https://medium.com/velotio-perspectives/elasticsearch-101-fundamentals-core-components-a1fdc6090a5e)
 
 ## Installation
-  - Download ES from (here)[https://www.elastic.co/downloads/elasticsearch]
+  - Download ES from [here](https://www.elastic.co/downloads/elasticsearch)
   - Unzip it and follow instruction in above link to run it
   - Open command prompt and run `curl -XGET localhost:9200`
     ```
@@ -23,7 +23,7 @@
         "tagline" : "You Know, for Search"
       }
     ```
-  - Download Kibana from (here)[https://www.elastic.co/downloads/kibana]
+  - Download Kibana from [here](https://www.elastic.co/downloads/kibana)
   - Unzip it and follow instruction in above link to run it
 
 ## Shards
