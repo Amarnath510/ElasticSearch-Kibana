@@ -106,6 +106,17 @@ Hardware can fail at any time. To ensure fault tolerance and high availability E
     "total": 111392,
     "max_score": 1,
   ```
+  
+  **Using curl**: For above example (This is to show how we can make a request using `curl`)
+  ```
+  $ curl -XGET localhost:9200/shakespeare/_search/?pretty -d '   (press enter)
+  > {
+  >   "query": {
+  >     "match_all": {}
+  >   }
+  > }'
+  ```
+  **NOTE**: You can use `?pretty` or at the end you can append pipe and `jq` => `}' | jq`
 
   ### match_all, size, from - Pagination
   - By default page size is 10. Using total results count we can query based on result number(using `from` - not page number but result number) and also the number of results (using `size`) you want per page
