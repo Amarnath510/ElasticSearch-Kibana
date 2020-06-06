@@ -88,8 +88,28 @@ Hardware can fail at any time. To ensure fault tolerance and high availability E
      }
    }
   ```
+  
+  ### Count of all docs
+  ```
+  curl -XGET localhost:9200/shakespeare/_count | jq   (jq is to format the output)
+  ```
+  OR from Kibana
+  ```
+  GET shakespeare/_count
+  ```
+  - Output:
+  ```
+  {
+    "count": 111392,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    }
+  }
+  ```
 
-  ### Find number of documents in the index
+  ### Fetch all documents in the index (returns total count and 10 docs, as 10 is the default size)
   - `GET shakespeare/_search` (shorthand querying style) or 
   - Use response body querying style,
   ```
